@@ -19,8 +19,8 @@ public class ContaController {
 
   public boolean depositar(Conta conta, String entradaValor, BancoController bancoController){
     try{
-      validaValor(entradaValor);
       double valor = Double.parseDouble(entradaValor);
+      validaValor(valor);
       int posicao = bancoController.encontrarPosicaoConta(conta.getAgencia(), conta.getNumero());
       bancoController.deposito(posicao, valor);
       System.out.println("Deposito realizado com sucesso"); 
@@ -36,8 +36,8 @@ public class ContaController {
 
   public boolean sacar(Conta conta, String entradaValor, BancoController bancoController){
     try{
-      validaValor(entradaValor);
       double valor = Double.parseDouble(entradaValor);
+      validaValor(valor);
       int posicao = bancoController.encontrarPosicaoConta(conta.getAgencia(), conta.getNumero());
       if(conta.getSaldo() >= valor){
         bancoController.saque(posicao, valor);
@@ -101,8 +101,7 @@ public class ContaController {
     return contaPoupanca;
   }
 
-  private void validaValor(String entradaValor) throws ContaException{
-    double valor = Double.parseDouble(entradaValor);
+  private void validaValor(double valor) throws ContaException{
     if(valor <= 0){
       throw new ContaException("Não é aceito números negativos ou iguais a zero");
     }
